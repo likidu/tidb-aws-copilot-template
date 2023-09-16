@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  wordpress:
+    image: docker.io/bitnami/wordpress-nginx:latest
+    platform: linux/amd64
+    ports:
+      - '80:8080'
+      - '433:8443'
+    volumes:
+      - 'wordpress_data:/bitnami/wordpress'
+    environment:
+      BITNAMI_DEBUG: 'true'
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      ALLOW_EMPTY_PASSWORD: no
+      WORDPRESS_DATABASE_HOST: 'gateway01.us-west-2.prod.aws.tidbcloud.com'
+      WORDPRESS_DATABASE_PORT_NUMBER: 4000
+      WORDPRESS_DATABASE_USER: 2eC8U2Spwt6Hy1f.root
+      WORDPRESS_DATABASE_PASSWORD: 24jTlQYNuTaHHZKz
+      WORDPRESS_DATABASE_NAME: main
+      # WORDPRESS_DB_COLLATE: 'utf8mb4_bin'
+      # WORDPRESS_DATABASE_COLLATE: 'utf8mb4_bin'
+      WORDPRESS_ENABLE_DATABASE_SSL: yes
+      WORDPRESS_DATABASE_SSL_CA_FILE: '/etc/ssl/certs/ca-certificates.crt'
+      MYSQL_CLIENT_CREATE_DATABASE_COLLATE: 'utf8mb4_bin'
+      # WORDPRESS_CONFIG_EXTRA: |
+      #   define('MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL);
+      #   define('MYSQL_SSL_CA', '/etc/ssl/certs/ca-certificates.crt');
+      #   define('DB_COLLATE', 'utf8mb4_bin');
+volumes:
+  wordpress_data:
+    driver: local
